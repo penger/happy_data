@@ -1,0 +1,43 @@
+spring:
+  # datasource 数据源配置内容
+  datasource:
+    url: jdbc:mysql://101.34.42.46:3306/coinmon?autoReconnect=true&useSSL=false&serverTimezone=GMT-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: happy2021
+
+  elasticsearch:
+    socket-timeout: 30s
+    username: elastic
+    password: elastic
+    uris: http://192.168.1.123:9200
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+
+  thymeleaf:
+    cache: false   #缓存，如果要热部署设置为false
+    prefix: classpath:/templates/  #静态页面前置目录
+    check-template-location: true  #本地模板检查
+    suffix: .html  #页面后缀
+    encoding: UTF-8  #页面编码
+    servlet:
+      content-type: text/html  #页面类型
+    mode: HTML  #页面模式，其实可以设置为HTML5、LEGACYHTML5（非严格检查格式，这个还需要其他包引入）
+
+
+
+
+# mybatis 配置内容
+mybatis-plus:
+  config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
+  mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
+  type-aliases-package: com.gp.quantificat.domain # 配置数据库实体包路径
+
+#server:
+#  port: 9090
+#debug: true
+
+# 打包命令
+# mvn clean package spring-boot:repackage -DskipTests

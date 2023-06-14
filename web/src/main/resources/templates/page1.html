@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <!--    <th:block th:include="layout/header"></th:block>-->
+    <th:block th:include="layout/header"></th:block>
+    <script type="text/javascript" th:src="@{/static/js/vis.js}"></script>
+    <style type="text/css">
+        #mynetwork {
+            width: 1600px;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+<!--<div class="container">-->
+<!--    <div th:if="${not #lists.isEmpty(nodes)}">-->
+<!--        <table class="table table-striped">-->
+<!--            <tr>-->
+<!--                <th>成交量排名</th>-->
+<!--&lt;!&ndash;                <th>名称</th>&ndash;&gt;-->
+<!--                <th>波动</th>-->
+<!--            </tr>-->
+<!--            <tr th:each="node : ${nodes}">-->
+<!--                <td th:text="${nodeStat.index+1}"></td>-->
+<!--&lt;!&ndash;                <td th:text="${node.birthday}"></td>&ndash;&gt;-->
+<!--                <td th:text="${node.name}"></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script type="text/javascript">
+        var nodes = new vis.DataSet([[${nodes}]]);
+        // create an array with edges
+        var edges = new vis.DataSet([]);
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+        nodes: nodes,
+        edges: edges,
+    };
+        var options = {};
+        var network = new vis.Network(container, data, options);
+</script>
+</body>
+</html>
