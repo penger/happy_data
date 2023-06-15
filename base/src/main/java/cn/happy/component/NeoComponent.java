@@ -22,7 +22,7 @@ public class NeoComponent {
 
     public static NeoParam getDefaultNeoParam(){
         return NeoParam.builder()
-                .uri("bolt://192.168.1.123:7687")
+                .uri("bolt://tx:7687")
                 .username("neo4j")
                 .password("happy_cassini")
                 .build();

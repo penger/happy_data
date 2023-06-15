@@ -5,13 +5,14 @@ from localneo4j import page1
 
 app = Flask(__name__)
 
-# Reading data
-data_df = pd.read_csv("static/data/Churn_data.csv")
-churn_df = data_df[(data_df['Churn'] == "Yes").notnull()]
+
+@app.route('/index', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 
 @app.route('/page1', methods=['GET'])
-def index():
+def page1():
     if request.method == 'GET':
         label = request.args.get('label')
         key = request.args.get('key')
@@ -23,6 +24,12 @@ def index():
 @app.route('/page2')
 def index2():
     return render_template('graph_show.html')
+
+
+
+@app.route('/demo')
+def index2():
+    return render_template('demo2.html')
 
 
 # @app.route('/home')

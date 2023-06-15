@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>layout 后台大布局 - Layui</title>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+
+
+    <script th:src="@{/static/js/vis.js}"></script>
+    <script th:src="@{/static/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/vis.css}">
+
+</head>
+<body class="layui-container" >
+<div id="VIS_draw"  style="height: 900px;"></div>
+<table id="demo" lay-filter="test"></table>
+</div>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script>
+    var form=layui.form;
+    var table=layui.table;
+    $ = layui.jquery;//为了在打开用户管理就完成对下拉框的赋值
+    // form.render();//渲染表单
+    // //第一个实例
+    // var myTable= table.render({
+    //     elem: '#demo'
+    //     // ,height: 350
+    //     ,url: 'findAll' //数据接口
+    //     ,page: false //开启分页
+    //     ,cols: [
+    //         [ //表头
+    //             {field: 'id', title: 'id', width:80, sort: true, fixed: 'left'},
+    //             {field: 'name', title: 'name', width:80, sort: true, fixed: 'left'},
+    //             {field: 'color', title: 'color', width:80, sort: true, fixed: 'left'}
+    //         ]]
+    // });
+
+
+    var container = document.getElementById("VIS_draw");
+    var nodes, edges
+    function startNetwork(){
+        var options = {
+            nodes: {
+                shape: 'circle',
+                size: 25,
+                font: {
+                    size: 15
+                }
+                ,shadow: true
+            },
+            edges: {
+                font: {
+                    size: 10,
+                    align: 'top'
+                },
+                color: 'grey',
+                arrows: {
+                    to: {enabled: true, scaleFactor: 1.2}
+                },
+                smooth: {enabled: true}
+                ,shadow: true
+            }
+        };
+        var nodeSet = new vis.DataSet(nodes)
+        var edgeSet = new vis.DataSet(edges)
+        var data ={
+            nodes:nodeSet,
+            edges:edgeSet
+        }
+        var network = new vis.Network(container, data, options);
+    }
+
+    function changeNode(){
+        nodes.update([{id:'start',color:'red'}])
+    }
+
+
+    function runEvery2Sec(){
+        //每隔 2s 运行一次
+        setTimeout(runEvery2Sec,2*1000)
+        $.ajax(
+            {
+                'url':'/findNodes',
+                'type':'GET',
+                'success':function(data){
+                    nodes = data
+                    console.log("运行一次获取"+ data)
+                    startNetwork();
+                }
+            }
+        )
+    }
+    //启动每次运行
+    runEvery2Sec();
+
+</script>
+</body>
+</html>

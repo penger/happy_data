@@ -1,5 +1,7 @@
 package cn.happy.controller;
 
+import cn.happy.domain.LayUiTable;
+import cn.happy.domain.Node;
 import cn.happy.service.PersonService;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +34,9 @@ public class MeController {
     }
 
 
-
     @RequestMapping("/name/{name}")
     @ResponseBody
     public ModelAndView getPersonByName(@PathVariable(value = "name") String name) {
-        //各个账户下的金额
         Map<String, Object> map = personService.getPersonByName(name);
         Gson gson = new Gson();
         String mapJson = gson.toJson(map);
@@ -61,9 +62,40 @@ public class MeController {
         return mv;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/first")
     public ModelAndView toTest() {
-        return new ModelAndView("test");
+        return  new ModelAndView("first");
     }
+
+
+    @RequestMapping(value="findAll")
+    @ResponseBody
+    public LayUiTable findAll(){
+        List<Node> nodes = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Node node = new Node();
+            node.setId(Long.parseLong(""+i));
+            node.setColor("red");
+            node.setLabel("name"+i);
+            node.setSize(100+i);
+            nodes.add(node);
+        }
+        LayUiTable table = new LayUiTable();
+        table.setCode(0);
+        table.setData(nodes);
+        table.setMsg("获取成功数据");
+        table.setCount(nodes.size());
+        return table;
+    }
+
+    @RequestMapping(value="findNodes")
+    @ResponseBody
+    public List<Node> findNodes(){
+        List<Node> nodes = personService.getAllGraphNodes();
+        return nodes;
+    }
+
+
+
 
 }

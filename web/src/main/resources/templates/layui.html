@@ -83,6 +83,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
 <!--        <div style="padding: 15px;">内容主体区域</div>-->
+        <iframe id="iframMain" src="" style="width: 100%;height: 100%"></iframe>
     </div>
 
     <div class="layui-footer">
@@ -91,6 +92,20 @@
     </div>
 </div>
 <script th:src="@{/static/layui/layui.js}"></script>
-<script>   </script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    $(function () {
+        //页面加载之后执行的代码
+        //点击a标签的时候，修改iframe的src属性
+        $("dd>a").click(function (e) {
+            //阻断超链接的跳转事件
+            e.preventDefault();
+            //取得超链接对象的href属性值赋给iframe的src属性
+            $("#iframMain").attr("src",$(this).attr("href"));
+        })
+    })
+</script>
 </body>
 </html>

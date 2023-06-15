@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Node {
-    public String id;
-    public String name;
+    public Long id;
+    public String label;
     public String color;
-    public String size;
+    public Integer size;
 }
