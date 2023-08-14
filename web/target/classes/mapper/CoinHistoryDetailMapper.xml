@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gp.quantificat.mapper.CoinHistoryDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.gp.quantificat.domain.CoinHistoryDetail">
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="close" column="close" jdbcType="DECIMAL"/>
+            <result property="count" column="count" jdbcType="DECIMAL"/>
+            <result property="high" column="high" jdbcType="DECIMAL"/>
+            <result property="low" column="low" jdbcType="DECIMAL"/>
+            <result property="maxDiePrecent" column="max_die_precent" jdbcType="DOUBLE"/>
+            <result property="maxPrecent" column="max_precent" jdbcType="DOUBLE"/>
+            <result property="maxZhangPrecent" column="max_zhang_precent" jdbcType="DOUBLE"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="open" column="open" jdbcType="DECIMAL"/>
+            <result property="precent" column="precent" jdbcType="DOUBLE"/>
+            <result property="time" column="time" jdbcType="VARCHAR"/>
+            <result property="vol" column="vol" jdbcType="DECIMAL"/>
+            <result property="insertTime" column="insert_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        amount,close,count,
+        high,low,max_die_precent,
+        max_precent,max_zhang_precent,name,
+        open,precent,time,
+        vol,insert_time
+    </sql>
+
+    <select id="selectAllByTime" resultMap="BaseResultMap">
+        select
+            amount,close,count,
+            high,low,max_die_precent,
+            max_precent,max_zhang_precent,name,
+            open,precent,time,
+            vol,insert_time
+        from coin_history_detail
+        where
+        time = #{time,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllByNameInAndTimeAfterOrderByTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin_history_detail
+        where
+        name in
+        <foreach collection="nameList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        AND time > #{time,jdbcType=VARCHAR}
+        order by time
+    </select>
+
+    <delete id="deleteByTimeAndName">
+        delete
+        from coin_history_detail
+        where
+            time = #{time,jdbcType=VARCHAR}
+          AND name = #{name,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByNameAndTimeAfter">
+        delete
+        from coin_history_detail
+        where name = #{name,jdbcType=VARCHAR}
+          AND time
+            > #{time,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAllByNameOrderByTimeDescLimit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin_history_detail
+        where
+        name = #{name,jdbcType=VARCHAR}
+        order by time desc
+        limit size = #{size,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByTime">
+        delete
+        from coin_history_detail
+        where
+            time = #{time,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAllByNameInAndTimeIn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin_history_detail
+        where
+        name in
+        <foreach collection="nameList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        AND time in
+        <foreach collection="timeList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="selectAllByNameInAndTimeAfter" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin_history_detail
+        where
+        name in
+        <foreach collection="nameList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        AND time > #{time,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLuckiestAndUnluckiestCoins" resultMap="BaseResultMap">
+        select *
+            from coin_history_detail where BINARY  name like '%-USDT' and time >  #{time,jdbcType=VARCHAR} order by name , time  desc
+    </select>
+
+
+</mapper>

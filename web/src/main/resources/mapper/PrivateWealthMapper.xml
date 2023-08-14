@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gp.quantificat.mapper.PrivateWealthMapper">
+
+    <resultMap id="BaseResultMap" type="com.gp.quantificat.domain.PrivateWealth">
+            <id property="date" column="date" jdbcType="VARCHAR"/>
+            <result property="btcPrice" column="btc_price" jdbcType="DECIMAL"/>
+            <result property="close" column="close" jdbcType="DECIMAL"/>
+            <result property="open" column="open" jdbcType="DECIMAL"/>
+            <result property="precent" column="precent" jdbcType="DECIMAL"/>
+            <result property="earn" column="earn" jdbcType="DECIMAL"/>
+            <result property="comment" column="comment" jdbcType="VARCHAR"/>
+            <result property="insertTime" column="insert_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        date,btc_price,close,
+        open,precent,earn,
+        comment,insert_time
+    </sql>
+
+    <select id="selectOneByDate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from private_wealth
+        where
+        date = #{date,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllOrderByDateDescLimit10" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from private_wealth
+        order by insert_time desc limit 10
+    </select>
+
+    <select id="selectAllOrderByDateDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from private_wealth
+        order by insert_time desc limit 2
+    </select>
+
+
+</mapper>

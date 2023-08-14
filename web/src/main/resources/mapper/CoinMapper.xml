@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gp.quantificat.mapper.CoinMapper">
+
+    <resultMap id="BaseResultMap" type="com.gp.quantificat.domain.Coin">
+            <id property="coinName" column="coin_name" jdbcType="VARCHAR"/>
+            <result property="chosenRank" column="chosen_rank" jdbcType="INTEGER"/>
+            <result property="favoriteRank" column="favorite_rank" jdbcType="INTEGER"/>
+            <result property="isChosen" column="is_chosen" jdbcType="BIT"/>
+            <result property="isFavorite" column="is_favorite" jdbcType="BIT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        coin_name,chosen_rank,favorite_rank,
+        is_chosen,is_favorite
+    </sql>
+
+    <select id="selectAllByIsChosenOrderByChosenRankDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin
+        where
+        is_chosen = #{isChosen,jdbcType=BOOLEAN}
+        order by chosen_rank desc
+    </select>
+    <select id="selectAllByIsFavoriteOrderByFavoriteRank" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin
+        where
+        is_favorite = #{isFavorite,jdbcType=BOOLEAN}
+        order by favoriteRank
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin
+    </select>
+
+    <select id="dfasdf" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin
+        where
+        chosen_rank = #{chosenRank,jdbcType=NUMERIC}
+    </select>
+
+</mapper>

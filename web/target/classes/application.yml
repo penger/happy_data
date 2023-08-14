@@ -1,0 +1,38 @@
+spring:
+  # datasource 数据源配置内容
+  datasource:
+    url: jdbc:mysql://101.34.42.46:3306/coinmon?autoReconnect=true&useSSL=false&serverTimezone=GMT-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: happy2021
+
+  elasticsearch:
+    socket-timeout: 30s
+    username: elastic
+    password: elastic
+    uris: http://192.168.1.123:9200
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+  thymeleaf:
+    #缓冲的配置
+    cache: false
+    check-template: true
+    check-template-location: true
+    #开启MVC thymeleaf 视图解析
+    enabled: true
+    encoding: utf-8
+
+# mybatis 配置内容
+mybatis-plus:
+  config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
+  mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
+  type-aliases-package: com.gp.quantificat.domain # 配置数据库实体包路径
+
+server:
+  port: 9090
+debug: true
+
+# 打包命令
+# mvn clean package spring-boot:repackage -DskipTests

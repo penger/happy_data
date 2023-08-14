@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gp.quantificat.mapper.CoinTriggerMapper">
+
+    <resultMap id="BaseResultMap" type="com.gp.quantificat.domain.CoinTrigger">
+            <id property="id" column="id" jdbcType="DECIMAL"/>
+            <result property="coinName" column="coin_name" jdbcType="VARCHAR"/>
+            <result property="coinPrice" column="coin_price" jdbcType="DECIMAL"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="BIT"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,coin_name,coin_price,
+        message,status,type
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from coin_trigger
+    </select>
+</mapper>

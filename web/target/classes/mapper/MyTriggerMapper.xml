@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gp.quantificat.mapper.MyTriggerMapper">
+
+    <resultMap id="BaseResultMap" type="com.gp.quantificat.domain.MyTrigger">
+            <id property="id" column="id" jdbcType="DECIMAL"/>
+            <result property="earn" column="earn" jdbcType="DECIMAL"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="BIT"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,earn,message,
+        status,type
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from my_trigger
+    </select>
+    <update id="updateTypeByEarn1">
+        update my_trigger set type='down' ;
+    </update>
+
+    <update id="updateTypeByEarn2">
+        update my_trigger set type='up' where earn >0
+    </update>
+
+    <update id="updateStatus">
+        update my_trigger
+        set status = #{status,jdbcType=BOOLEAN}
+    </update>
+
+
+</mapper>
