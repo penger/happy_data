@@ -83,8 +83,8 @@ class MessageConsumer:
 
 
 # Running multiple consumers
-broker = 'cassini:29092'
-topic = 'test4'
+broker = '192.168.1.111:9092'
+topic = 'input'
 group_id = 'consume1'
 
 consumer1 = MessageConsumer(broker, topic, group_id)

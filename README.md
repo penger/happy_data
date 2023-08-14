@@ -89,3 +89,11 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1    
 ```
+
+
+# layuimini
+- 将静态文件拷贝到 static 文件夹下
+- 将page是拷贝到 templates 文件夹下
+- 配置 登录拦截器 WebMvcConfig  配置静态资源目录  配置无认证访问的后台登录拦截
+- 配置 api/init.json
+- 修改 index.html 中静态资源的目录

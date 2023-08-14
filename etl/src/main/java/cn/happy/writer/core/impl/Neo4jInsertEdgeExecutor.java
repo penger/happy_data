@@ -55,7 +55,6 @@ class Neo4jInsertEdgeExecutor implements Neo4jExecutor {
             collectionStr.add(tempStr);
         }
         String jsonStr =  "";
-
         //如果为空，没有属性
         if(collectionStr.size()>0) {
             jsonStr = "{"+ collectionStr.stream().collect(Collectors.joining(","))+"}";

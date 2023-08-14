@@ -20,17 +20,17 @@ class Person:
 
 
 my_producer = KafkaProducer(
-    bootstrap_servers=['cassini:29092'],
+    bootstrap_servers=['192.168.1.111:9092'],
     value_serializer=lambda x: dumps(x).encode('utf-8')
 )
 
 faker = Faker(locale="zh_CN")
 
-for i in range(500000):
+for i in range(20):
     my_data = {'num': i}
     p = Person(faker.name(), faker.address(), faker.province(), faker.phone_number(), faker.ssn(), faker.ssn()[6:14],
                faker.email())
     my_data = json.dumps(p.__dict__,ensure_ascii=False)
     print(my_data)
-    my_producer.send(topic='test4', value=my_data)
-    # sleep(2)
+    my_producer.send(topic='input', value=my_data)
+    my_producer.flush()
