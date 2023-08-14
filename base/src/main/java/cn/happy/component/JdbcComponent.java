@@ -7,6 +7,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author gongpeng
@@ -345,7 +346,7 @@ public class JdbcComponent {
      */
     public static String mapListToMysqlInsertSql(List<HashMap<String, Object>> contents, String tableName) {
         StringBuilder builder = new StringBuilder();
-        List<String> keys = contents.get(0).keySet().stream().toList();
+        List<String> keys = contents.get(0).keySet().stream().collect(Collectors.toList());
         builder.append("INSERT INTO ").append(tableName).append(" (");
         for (int i = 0, len = keys.size(); i < len; i++) {
             if (i != 0) {
