@@ -14,6 +14,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import us.codecraft.xsoup.Xsoup;
 
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class WikiSearch {
 
     public static void kk() throws IOException {
 
-        final HttpGet request = new HttpGet("http://localhost/search?content=wikipedia_zh_all_maxi_2023-03&pattern=%E6%B3%A8%E6%84%8F");
+        final HttpGet request = new HttpGet("http://localhost/search?content=wikipedia_zh_all_maxi_2023-03&pattern=美国");
         try (CloseableHttpClient client = HttpClientBuilder.create()
                 .build();
              CloseableHttpResponse response = (CloseableHttpResponse) client
@@ -43,8 +45,17 @@ public class WikiSearch {
             System.out.println(sb.toString());
             String html = sb.toString();
             Document doc = Jsoup.parse(html);
-            String pages = Xsoup.compile("/html/body/div[1]/b[2]/text()").evaluate(doc).get();
-            System.out.println(pages);
+//            String pages = Xsoup.compile("/html/body/div[1]/b[2]/text()").evaluate(doc).get();
+            Elements elements = Xsoup.compile("/html/body/div[2]/ul/li").evaluate(doc).getElements();
+            for (Element element : elements) {
+                System.out.println(Xsoup.select(element, "/a/text()").get());
+                System.out.println(Xsoup.select(element, "/a/@href").get());
+                System.out.println(Xsoup.select(element, "/cite/html()").get());
+                System.out.println(Xsoup.select(element, "/div[1]/text()").get());
+                System.out.println(Xsoup.select(element, "/div[2]/text()").get());
+            }
+            System.out.println(elements.size());
+//            System.out.println(pages);
 
         }
     }

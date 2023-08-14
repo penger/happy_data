@@ -15,19 +15,14 @@ spring:
     resources:
       static-locations: classpath:/static/
 
-
   thymeleaf:
-    cache: false   #缓存，如果要热部署设置为false
-    prefix: classpath:/templates/  #静态页面前置目录
-    check-template-location: true  #本地模板检查
-    suffix: .html  #页面后缀
-    encoding: UTF-8  #页面编码
-    servlet:
-      content-type: text/html  #页面类型
-    mode: HTML  #页面模式，其实可以设置为HTML5、LEGACYHTML5（非严格检查格式，这个还需要其他包引入）
-
-
-
+    #缓冲的配置
+    cache: false
+    check-template: true
+    check-template-location: true
+    #开启MVC thymeleaf 视图解析
+    enabled: true
+    encoding: utf-8
 
 # mybatis 配置内容
 mybatis-plus:
@@ -35,9 +30,9 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
   type-aliases-package: com.gp.quantificat.domain # 配置数据库实体包路径
 
-#server:
-#  port: 9090
-#debug: true
+server:
+  port: 9090
+debug: true
 
 # 打包命令
 # mvn clean package spring-boot:repackage -DskipTests

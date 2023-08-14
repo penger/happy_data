@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.11</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.example</groupId>
-    <artifactId>web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.swad</groupId>
+    <artifactId>quant</artifactId>
+    <version>1.0</version>
+    <name>quant</name>
+    <description>quant for okex</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <java.version>1.8</java.version>
+        <okhttp3.version>4.5.0</okhttp3.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
+        <!-- Cassandra -->
+        <cassandra-driver-core.version>3.1.2</cassandra-driver-core.version>
+        <cassandra-unit.version>3.1.1.0</cassandra-unit.version>
+        <datastax-cassandra.version>4.1.0</datastax-cassandra.version>
+        <elasticsearch>7.16.1</elasticsearch>
+        <jakarta-json.version>2.0.1</jakarta-json.version>
+        <start-class>com.gp.quantificat.SpringdemoApplication</start-class>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,25 +47,270 @@
         </dependency>
 
         <dependency>
-            <groupId>org.fusion</groupId>
-            <artifactId>base</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+        <dependency> <!-- 本示例，我们使用 MySQL -->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.49</version>
+        </dependency>
+
+        <!-- 实现对 MyBatis 的自动化配置 -->
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
+
+        <!-- 方便等会写单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <!--            <scope>test</scope>-->
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>1.7.4</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.warrenstrange</groupId>
+            <artifactId>googleauth</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.8.0</version>
+            <version>2.6</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/us.codecraft/xsoup -->
         <dependency>
-            <groupId>us.codecraft</groupId>
-            <artifactId>xsoup</artifactId>
-            <version>0.3.1</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+
+
+
+
+
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/info.bliki.wiki/bliki-core &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>info.bliki.wiki</groupId>-->
+        <!--            <artifactId>bliki-core</artifactId>-->
+        <!--            <version>3.1.0</version>-->
+        <!--        </dependency>-->
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/jempbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>jempbox</artifactId>
+            <version>1.8.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-util -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>9.4.14.v20181114</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>single</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <archive>-->
+            <!--                                <manifest>-->
+            <!--                                    <mainClass>-->
+            <!--                                        com.gp.quantificat.SpringdemoApplication-->
+            <!--                                    </mainClass>-->
+            <!--                                </manifest>-->
+            <!--                            </archive>-->
+            <!--                            <descriptorRefs>-->
+            <!--                                <descriptorRef>jar-with-dependencies</descriptorRef>-->
+            <!--                            </descriptorRefs>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-shade-plugin</artifactId>-->
+            <!--                <version>2.3</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>shade</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <transformers>-->
+            <!--                                &lt;!&ndash;<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+            <!--                                    <mainClass>flink.KafkaDemo1</mainClass>-->
+            <!--                                </transformer>&ndash;&gt;-->
+            <!--                                <transformer-->
+            <!--                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+            <!--                                    <resource>reference.conf</resource>-->
+            <!--                                </transformer>-->
+            <!--                            </transformers>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
+        </plugins>
+
+    </build>
 
 </project>
